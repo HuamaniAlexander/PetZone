@@ -1,0 +1,133 @@
+/* SLIDER SUPERIOR - Banners dinámicos desde dashboard */
+.top-slider {
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(90deg, #23906F 0%, #2eab87 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.top-slider.hidden {
+    display: none;
+}
+
+.slider-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.slider-content a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.slider-content a:hover {
+    opacity: 0.9;
+}
+
+.slider-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.slider-description {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* Navegación del slider */
+.slider-nav {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background: white;
+    width: 20px;
+    border-radius: 4px;
+}
+
+/* Animación de fade */
+.slider-item {
+    display: none;
+    width: 100%;
+    height: 100%;
+    animation: fadeSlide 0.5s ease-in-out;
+}
+
+.slider-item.active {
+    display: flex;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .top-slider {
+        height: 40px;
+    }
+
+    .slider-title {
+        font-size: 0.85rem;
+    }
+
+    .slider-description {
+        display: none;
+    }
+
+    .slider-content {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-slider {
+        height: 35px;
+    }
+
+    .slider-title {
+        font-size: 0.75rem;
+    }
+}

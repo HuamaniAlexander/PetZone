@@ -1,61 +1,95 @@
 <?php
-require_once __DIR__ . '/../models/Producto.php';
-require_once __DIR__ . '/helpers/response.php';
+// api/productos.php - API Pública de Productos (sin autenticación)
 
-// Obtener método HTTP
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Content-Type');
+
+require_once '../config/database.php';
+
+$database = new Database();
+$db = $database->getConnection();
+
 $method = $_SERVER['REQUEST_METHOD'];
-$producto = new Producto();
+$action = $_GET['action'] ?? 'list';
 
-switch ($method) {
-    case 'GET':
-        // Obtener todos los productos o filtrar por categoría
-        if (isset($_GET['categoria'])) {
-            $data = $producto->getByCategory($_GET['categoria']);
-        } elseif (isset($_GET['id'])) {
-            $data = $producto->getById($_GET['id']);
-        } elseif (isset($_GET['buscar'])) {
-            $data = $producto->search($_GET['buscar']);
-        } else {
-            $data = $producto->getAll();
-        }
-        Response::success($data);
-        break;
-        
-    case 'POST':
-        // Crear nuevo producto
-        $input = json_decode(file_get_contents('php://input'), true);
-        
-        if ($producto->create($input)) {
-            Response::success([], 'Producto creado exitosamente');
-        } else {
-            Response::error('Error al crear producto');
-        }
-        break;
-        
-    case 'PUT':
-        // Actualizar producto
-        $input = json_decode(file_get_contents('php://input'), true);
-        $id = $input['id'] ?? null;
-        
-        if ($id && $producto->update($id, $input)) {
-            Response::success([], 'Producto actualizado exitosamente');
-        } else {
-            Response::error('Error al actualizar producto');
-        }
-        break;
-        
-    case 'DELETE':
-        // Eliminar producto
-        $input = json_decode(file_get_contents('php://input'), true);
-        $id = $input['id'] ?? null;
-        
-        if ($id && $producto->delete($id)) {
-            Response::success([], 'Producto eliminado exitosamente');
-        } else {
-            Response::error('Error al eliminar producto');
-        }
-        break;
-        
-    default:
-        Response::error('Método no permitido', 405);
+if ($method !== 'GET') {
+    sendJSON(['success' => false, 'message' => 'Método no permitido'], 405);
 }
+
+switch ($action) {
+    case 'list':
+        getProductos();
+        break;
+    case 'get':
+        if (isset($_GET['id'])) {
+            getProducto($_GET['id']);
+        } else {
+            sendJSON(['success' => false, 'message' => 'ID no proporcionado'], 400);
+        }
+        break;
+    default:
+        sendJSON(['success' => false, 'message' => 'Acción no válida'], 400);
+}
+
+function getProductos() {
+    global $db;
+    
+    $categoria = $_GET['categoria'] ?? '';
+    $destacado = $_GET['destacado'] ?? '';
+    
+    $query = "SELECT id, nombre, descripcion, categoria, precio, stock, imagen, destacado 
+              FROM productos 
+              WHERE activo = 1";
+    
+    if (!empty($categoria) && $categoria !== 'todos') {
+        $query .= " AND categoria = :categoria";
+    }
+    
+    if (!empty($destacado)) {
+        $query .= " AND destacado = 1";
+    }
+    
+    $query .= " ORDER BY destacado DESC, created_at DESC";
+    
+    $stmt = $db->prepare($query);
+    
+    if (!empty($categoria) && $categoria !== 'todos') {
+        $stmt->bindParam(':categoria', $categoria);
+    }
+    
+    $stmt->execute();
+    $productos = $stmt->fetchAll();
+
+    sendJSON([
+        'success' => true,
+        'productos' => $productos,
+        'total' => count($productos)
+    ]);
+}
+
+function getProducto($id) {
+    global $db;
+    
+    $query = "SELECT id, nombre, descripcion, categoria, precio, stock, imagen, destacado 
+              FROM productos 
+              WHERE id = :id AND activo = 1 
+              LIMIT 1";
+    
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    
+    if ($stmt->rowCount() === 0) {
+        sendJSON(['success' => false, 'message' => 'Producto no encontrado'], 404);
+    }
+    
+    $producto = $stmt->fetch();
+    
+    sendJSON([
+        'success' => true,
+        'producto' => $producto
+    ]);
+}
+?>

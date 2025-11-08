@@ -1,0 +1,148 @@
+/* BANNER ANUNCIO INFERIOR ANIMADO */
+.bottom-announcement {
+    width: 100%;
+    background-color: #23906F;
+    color: white;
+    padding: 1rem 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 998;
+    overflow: hidden;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.bottom-announcement__wrapper {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: scrollLeft 20s linear infinite;
+}
+
+.bottom-announcement__content {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+}
+
+.bottom-announcement__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.bottom-announcement__icon {
+    font-size: 1.5rem;
+    color: #FFD700;
+}
+
+.bottom-announcement__text {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.bottom-announcement__separator {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    margin: 0 1rem;
+}
+
+.bottom-announcement__close {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    padding: 0;
+}
+
+.bottom-announcement__close:hover {
+    background: white;
+    color: #23906F;
+    transform: translateY(-50%) rotate(90deg);
+}
+
+/* Animación de desplazamiento */
+@keyframes scrollLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pausar animación al hover */
+.bottom-announcement:hover .bottom-announcement__wrapper {
+    animation-play-state: paused;
+}
+
+/* Ocultar anuncio */
+.bottom-announcement.hidden {
+    display: none;
+}
+
+/* Ajustar margen inferior del body cuando hay anuncio */
+body.has-announcement {
+    margin-bottom: 60px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .bottom-announcement {
+        padding: 0.75rem 0;
+    }
+
+    .bottom-announcement__text {
+        font-size: 0.9rem;
+    }
+
+    .bottom-announcement__icon {
+        font-size: 1.3rem;
+    }
+
+    .bottom-announcement__close {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+
+    body.has-announcement {
+        margin-bottom: 55px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bottom-announcement__text {
+        font-size: 0.85rem;
+    }
+
+    .bottom-announcement__content {
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .bottom-announcement__separator {
+        margin: 0 0.75rem;
+    }
+
+    body.has-announcement {
+        margin-bottom: 50px;
+    }
+}

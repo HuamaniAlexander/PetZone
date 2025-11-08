@@ -7,11 +7,14 @@
     <title>Productos - PetZone</title>
     <link rel="stylesheet" href="../CSS/style.css">
     <link rel="stylesheet" href="../CSS/style-productos.css">
+    <link rel="stylesheet" href="../CSS/carrito.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;900&display=swap" rel="stylesheet">
+    
+    <script src="../JS/api.js"></script>
     <script src="../JS/productos.js" defer></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=stat_minus_1" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Shrikhand&display=swap" rel="stylesheet">
+    <script src="../JS/carrito.js"></script>
 </head>
 
 <body>
@@ -42,7 +45,11 @@
                 </li>
             </ul>
 
-            <button class="navbar__btn">CONTACTO</button>
+            <button class="navbar__btn" onclick="window.location.href='carrito.html'">
+                <span class="material-icons">shopping_cart</span>
+                CARRITO
+                <span id="cart-count" class="cart-badge">0</span>
+            </button>
         </nav>
     </header>
 
@@ -73,200 +80,22 @@
         <section class="catalog">
             <div class="catalog__container">
                 <div class="catalog__grid" id="productGrid">
-                    <!-- Producto 1 -->
-                    <article class="product" data-category="comida">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/ComidaPerroPremium.webp" alt="Comida para Perros Premium"
-                                class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Comida para Perros Premium</h3>
-                            <p class="product__description">1 Kg</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/15.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Producto 2 -->
-                    <article class="product" data-category="comida">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/PSnacksPerros.jpg" alt="Snacks para Perros" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Snacks para Perros</h3>
-                            <p class="product__description">30 Barras</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/25.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Producto 3 -->
-                    <article class="product" data-category="aseo">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/PKitPeluqueria.jpg" alt="Kit Peluquería" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Kit Peluquería</h3>
-                            <p class="product__description">Perros</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/40.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Producto 4 -->
-                    <article class="product" data-category="juguetes">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/PCamaAcogedora.jpg" alt="Cama Acogedora" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Cama Acogedora</h3>
-                            <p class="product__description">Pequeño</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/46.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Producto 5 -->
-                    <article class="product" data-category="antipulgas">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/PastillaAntipulgas.webp" alt="Collar Calmante para Gatos"
-                                class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Pastillas Antipulgas</h3>
-                            <p class="product__description">Paquete de 3</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/60.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Producto 6 -->
-                    <article class="product" data-category="juguetes">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/PJugueteGato.jpg"
-                                alt="Bola dispensadora de golosinas interactiva" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Bola dispensadora de golosinas interactiva</h3>
-                            <p class="product__description">Gatos</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/30.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Productos adicionales (ocultos inicialmente) -->
-                    <article class="product product--hidden" data-category="comida">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/ComidaGatosPremium.jpg" alt="Comida para Gatos Premium"
-                                class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Comida para Gatos Premium</h3>
-                            <p class="product__description">2 Kg</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/35.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="product product--hidden" data-category="juguetes">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/PelotaInteractivaPerro.webp" alt="Pelota Interactiva" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Pelota Interactiva</h3>
-                            <p class="product__description">Para Perros</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/22.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="product product--hidden" data-category="aseo">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/ShampooHipoalergénico.webp" alt="Shampoo Hipoalergénico" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Shampoo Hipoalergénico</h3>
-                            <p class="product__description">500ml</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/32.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="product product--hidden" data-category="antipulgas">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/TratamientoAntipulgas.webp" alt="Tratamiento Antipulgas" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Tratamiento Antipulgas</h3>
-                            <p class="product__description">2 Pipetas</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/30.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="product product--hidden" data-category="comida">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/AlimentoCachorros.webp" alt="Alimento para Cachorros"
-                                class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Alimento para Cachorros</h3>
-                            <p class="product__description">3 Kg</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/55.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="product product--hidden" data-category="juguetes">
-                        <div class="product__image">
-                            <img src="../IMG/Productos/RascadorGatos.jpg" alt="Rascador para Gatos" class="product__img">
-                        </div>
-                        <div class="product__info">
-                            <h3 class="product__name">Rascador para Gatos</h3>
-                            <p class="product__description">Mediano</p>
-                            <div class="product__footer">
-                                <span class="product__price">S/65.00</span>
-                                <button class="product__btn">Comprar</button>
-                            </div>
-                        </div>
-                    </article>
+                    <!-- Los productos se cargarán dinámicamente aquí -->
                 </div>
 
                 <!-- Botón Mostrar Más -->
                 <div class="catalog__more">
                     <button class="catalog__more-btn" id="showMoreBtn">
                         <span class="catalog__more-icon">    
-                                    <span class="material-symbols-outlined">stat_minus_1</span>
-                                    <span class="material-symbols-outlined">stat_minus_1</span>
-                                    <span class="material-symbols-outlined">stat_minus_1</span>
+                            <span class="material-symbols-outlined">stat_minus_1</span>
+                            <span class="material-symbols-outlined">stat_minus_1</span>
+                            <span class="material-symbols-outlined">stat_minus_1</span>
                         </span>
                         <span class="catalog__more-text">Mostrar más</span>
                         <span class="catalog__more-icon">
-                                    <span class="material-symbols-outlined">stat_minus_1</span>
-                                    <span class="material-symbols-outlined">stat_minus_1</span>
-                                    <span class="material-symbols-outlined">stat_minus_1</span>
+                            <span class="material-symbols-outlined">stat_minus_1</span>
+                            <span class="material-symbols-outlined">stat_minus_1</span>
+                            <span class="material-symbols-outlined">stat_minus_1</span>
                         </span>
                     </button>
                 </div>
@@ -288,12 +117,8 @@
                 </ul>
             </nav>
         </div>
-
     </footer>
 
 </body>
 
-
 </html>
-
-
